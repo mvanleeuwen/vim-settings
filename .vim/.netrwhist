@@ -1,0 +1,9 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =7
+let g:netrw_dirhist_1='/home/martijnl/test'
+let g:netrw_dirhist_2='/etc/amavisd'
+let g:netrw_dirhist_3='/home/martijnl/.ssh/a'
+let g:netrw_dirhist_4='/home/martijnl/.vim'
+let g:netrw_dirhist_5='/home/martijnl/.dotfiles'
+let g:netrw_dirhist_6='/home/martijnl/bin'
+let g:netrw_dirhist_7='/home/mvanleeuwen/Projects/MP/noc-nagstamon/Nagstamon_eCG/nagstamon.conf.config'
