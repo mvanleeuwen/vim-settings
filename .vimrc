@@ -1,12 +1,13 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Maintainer: 
+" Maintainer:
 "   Martijn van Leeuwen
 "   http://www.voc-vanleeuwen.com   -   info@voc-vanleeuwen.com
 "
-"   Version: 
+"   Version: 1.1
 "       1.0 -   03/06/2013
+"       1.1 -   11/06/2014 - Added pathogen and some extra plugins, increased the history to 50000
 "
-"   
+"
 " Sections:
 "   -> Algemeen
 "   -> VIM Gebruikers Interface
@@ -26,7 +27,10 @@
 "
 set nocompatible " voorkom emulatie vi bugs en limitaties
 "   Set history
-set history=5000
+set history=50000
+
+execute pathogen#infect()
+set sessionoptions-=options
 
 "   Enable filetype plugins
 filetype plugin on
@@ -129,8 +133,8 @@ set tw=500
 set laststatus=2
 
 " Format the status line
-set statusline=\ %{HasPaste()}%F%m%r%h\ %w\ \ CWD:\ %r%{getcwd()}%h\ \ \ Line:\ %l
-"set statusline=%<\ %n:%f\ %m%r%y%=%-35.(line:\ %l\ of\ %L,\ col:\ %c%V\ (%P)%)
+"set statusline=\ %{HasPaste()}%F%m%r%h\ %w\ \ CWD:\ %r%{getcwd()}%h\ \ \ Line:\ %l
+set statusline=%<\ %n:%f\ %m%r%y%=%-35.(line:\ %l\ of\ %L,\ col:\ %c%V\ (%P)%)
 
 set bufhidden=hide
 set scrolloff=3
@@ -138,12 +142,11 @@ nmap <F11> 1G=G
 imap <F11> <ESC>1G=Ga
 
 " FOLDING
-set fdm=indent     " activeer folding
-set nofoldenable   " fold code NIET bij openen van
-                   " bestand
-set foldnestmax=1  " niet genest folden
-set foldcolumn=0   " geen ruimte laten voor fold info
-nnoremap <space> za " gebruik spatiebar voor folding
+"set fdm=indent     " activeer folding
+"set nofoldenable   " fold code NIET bij openen van " bestand
+"set foldnestmax=3  " niet genest folden
+"set foldcolumn=0   " geen ruimte laten voor fold info
+"nnoremap <space> za " gebruik spatiebar voor folding
 
 " VIM-MENU op F4
 source $VIMRUNTIME/menu.vim
@@ -190,6 +193,15 @@ nmap <F3> :<C-R>=strftime('%c')<CR><Esc>
 
 "nnoremap <C-n> :call NumberToggle()<cr>
 
+" ==== Indentation ====
+set autoindent
+set smartindent
+set smarttab
+set expandtab
+set tabstop=2
+set softtabstop=2
+set shiftwidth=2
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Misc
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -215,4 +227,3 @@ endfunction
 
 " Dotted spaces, tabs and trailing spaces
 set list listchars=tab:\ \ ,trail:.
-
