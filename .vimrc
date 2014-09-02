@@ -26,8 +26,11 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "
 set nocompatible " voorkom emulatie vi bugs en limitaties
+
 "   Set history
-set history=50000
+" Enable a nice big viminfo file
+set viminfo='1000,f1,:1000,/1000
+set history=500
 
 execute pathogen#infect()
 set sessionoptions-=options
@@ -51,10 +54,31 @@ nmap <leader>w :w!<cr>
 "   =>  VIM Gebruikers Interface
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
+"-----------------------------------------------------------------------
+" terminal setup
+"-----------------------------------------------------------------------
+
+" Extra terminal things
+if (&term =~ "xterm") && (&termencoding == "")
+    set termencoding=utf-8
+endif
+
+if &term =~ "xterm"
+    " use xterm titles
+    if has('title')
+        set title
+    endif
+
+    " change cursor colour depending upon mode
+    if exists('&t_SI')
+        let &t_SI = "\<Esc>]12;lightgoldenrod\x7"
+        let &t_EI = "\<Esc>]12;grey80\x7"
+    endif
+endif
+
 " UITERLIJK
 set number       " toon lijnnummering
 set ruler        " toon rij/kolom nummers
-
 
 set cursorline
 set cursorcolumn
@@ -69,8 +93,9 @@ set incsearch " zoek terwijl zoekwoord wordt ingegeven
 
 " SYNTAX HIGHLIGHTING
 "syntax on
-syntax enable
-
+if has("syntax")
+  syntax enable
+endif
 
 " Set color scheme.
 set t_Co=256
@@ -124,7 +149,15 @@ set tw=500
 
 "set softtabstop=4 " verwijder spaties alsof het tabs zijn
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" Nice window title
+if has('title') && (has('gui_running') || &title)
+    set titlestring=
+    set titlestring+=%f\                                              " file name
+    set titlestring+=%h%m%r%w                                         " flags
+    set titlestring+=\ -\ %{v:progname}                               " program name
+    set titlestring+=\ -\ %{substitute(getcwd(),\ $HOME,\ '~',\ '')}  " working directory
+endif
 
 """"""""""""""""""""""""""""""
 " => Status line
