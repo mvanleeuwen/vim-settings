@@ -3,9 +3,10 @@
 "   Martijn van Leeuwen
 "   http://www.voc-vanleeuwen.com   -   info@voc-vanleeuwen.com
 "
-"   Version: 1.1
+"   Version: 1.2
 "       1.0 -   03/06/2013
-"       1.1 -   11/06/2014 - Added pathogen and some extra plugins, increased the history to 50000
+"       1.1 -   11/06/2014  - Added pathogen and some extra plugins, increased the history to 50000
+"       1.2 -   30/09/2014  - Modified some settings, removed unused lines, forced statusbar to be on.
 "
 "
 " Sections:
@@ -58,6 +59,10 @@ nmap <leader>w :w!<cr>
 " terminal setup
 "-----------------------------------------------------------------------
 
+set ls=2            " allways show status line
+set title           " show title in console title bar
+set ttyfast         " smoother changes
+
 " Extra terminal things
 if (&term =~ "xterm") && (&termencoding == "")
     set termencoding=utf-8
@@ -100,6 +105,7 @@ endif
 " Set color scheme.
 set t_Co=256
 "colorscheme solarized
+"colorscheme wombat
 colorscheme desert256
 set background=dark
 
@@ -210,21 +216,6 @@ nmap \T :set expandtab tabstop=8 shiftwidth=8 softtabstop=4<CR>
 nmap \M :set noexpandtab tabstop=8 softtabstop=4 shiftwidth=4<CR>
 nmap \m :set expandtab tabstop=2 shiftwidth=2 softtabstop=2<CR>
 nmap <F3> :<C-R>=strftime('%c')<CR><Esc>
-
-"
-" Backups
-"set backupdir=~/.vim/backup
-"set backup
-
-"function! NumberToggle()
-"  if(&relativenumber == 1)
-"    set number
-"  else
-"    set relativenumber
-"  endif
-"endfunc
-
-"nnoremap <C-n> :call NumberToggle()<cr>
 
 " ==== Indentation ====
 set autoindent
