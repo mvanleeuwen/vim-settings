@@ -36,6 +36,74 @@ set history=500
 execute pathogen#infect()
 set sessionoptions-=options
 
+" Load Plugins:
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+" alternatively, pass a path where Vundle should install plugins
+"call vundle#begin('~/some/path/here')
+
+" let Vundle manage Vundle, required
+Plugin 'gmarik/Vundle.vim'
+
+" The following are examples of different formats supported.
+" Keep Plugin commands between vundle#begin/end.
+" plugin on GitHub repo
+Plugin 'tpope/vim-fugitive'
+" plugin from http://vim-scripts.org/vim/scripts.html
+" Plugin 'L9'
+" Git plugin not hosted on GitHub
+Plugin 'git://git.wincent.com/command-t.git'
+" The sparkup vim script is in a subdirectory of this repo called vim.
+" Pass the path to set the runtimepath properly.
+Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
+" Avoid a name conflict with L9
+"Plugin 'user/L9', {'name': 'newL9'}
+" Track the engine.
+Plugin 'SirVer/ultisnips'
+" " Snippets are separated from the engine. Add this if you want them:
+Plugin 'honza/vim-snippets'
+Plugin 'airblade/vim-gitgutter'
+
+" Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
+" UltiSnips setting
+" make vim recognizing snippets dir
+set runtimepath+=~/.vim/my-snippets/
+" use different snippets dir
+let g:UltiSnipsSnippetsDir='~/.vim/my-snippets/'
+let g:UltiSnipsSnippetDirectories=["my-snippets"]
+" use vertical split to edit snippets
+let g:UltiSnipsEditSplit='vertical'
+" trigger snippet with Ctrl-l
+"let g:UltiSnipsExpandTrigger='<C-l>'
+" go to next snippet with Ctrl-j
+"et g:UltiSnipsJumpForwardTrigger='<C-j>'
+" go to previous snippet with Ctrl-k
+"et g:UltiSnipsJumpBackwardTrigger='<C-k>'
+let g:UltiSnipsNoPythonWarning = 1
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<c-b>"
+let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+
+" All of your Plugins must be added before the following line
+call vundle#end()            " required
+filetype plugin indent on    " required
+" To ignore plugin indent changes, instead use:
+"filetype plugin on
+"
+" Brief help
+" :PluginList          - list configured plugins
+" :PluginInstall(!)    - install (update) plugins
+" :PluginSearch(!) foo - search (or refresh cache first) for foo
+" :PluginClean(!)      - confirm (or auto-approve) removal of unused plugins
+"
+" see :h vundle for more details or wiki for FAQ
+" Put your non-Plugin stuff after this line
+
+Bundle "MarcWeber/vim-addon-mw-utils"
+Bundle "tomtom/tlib_vim"
+Bundle "garbas/vim-snipmate"
+
 "   Enable filetype plugins
 filetype plugin on
 filetype indent on
