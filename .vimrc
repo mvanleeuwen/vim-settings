@@ -3,10 +3,14 @@
 "   Martijn van Leeuwen
 "   http://www.voc-vanleeuwen.com   -   info@voc-vanleeuwen.com
 "
-"   Version: 1.2
-"       1.0 -   03/06/2013
-"       1.1 -   11/06/2014  - Added pathogen and some extra plugins, increased the history to 50000
-"       1.2 -   30/09/2014  - Modified some settings, removed unused lines, forced statusbar to be on.
+"   Version: 1.3.1
+"       1.0   - 03/06/2013
+"       1.1   - 11/06/2014  - Added pathogen and some extra plugins,
+"                             increased the history to 50000
+"       1.2   - 30/09/2014  - Modified some settings, removed unused lines,
+"                             forced statusbar to be on.
+"       1.3   - 19/02/2015  - Vundle Updates, tabs switched to 2 spaces from 4
+"       1.3.1 - 25/03/2015  - Minor tweaks
 "
 "
 " Sections:
@@ -26,7 +30,18 @@
 "   =>  ALGEMEEN
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "
+silent function! OSX()
+    return has('macunix')
+endfunction
+silent function! LINUX()
+    return has('unix') && !has('macunix') && !has('win32unix')
+endfunction
+silent function! WINDOWS()
+    return  (has('win16') || has('win32') || has('win64'))
+endfunction
+
 set nocompatible " voorkom emulatie vi bugs en limitaties
+scriptencoding utf-8
 
 "   Set history
 " Enable a nice big viminfo file
@@ -62,8 +77,11 @@ Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
 " Track the engine.
 Plugin 'SirVer/ultisnips'
 " " Snippets are separated from the engine. Add this if you want them:
-Plugin 'honza/vim-snippets'
+"Plugin 'honza/vim-snippets'
 Plugin 'airblade/vim-gitgutter'
+" We could also add repositories with a ".git" extension
+Plugin 'scrooloose/nerdtree.git'
+Plugin 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
 
 " Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
 " UltiSnips setting
@@ -213,9 +231,9 @@ set expandtab     " gebruik spaties in plaats van tabs
 " Be smart when using tabs ;)
 set smarttab
 
-" 1 tab == 4 spaces
-set shiftwidth=4
-set tabstop=4
+" 1 tab == 2 spaces
+set shiftwidth=2
+set tabstop=2
 
 " Linebreak on 500 characters
 set lbr
@@ -250,7 +268,7 @@ imap <F11> <ESC>1G=Ga
 
 " FOLDING
 "set fdm=indent     " activeer folding
-"set nofoldenable   " fold code NIET bij openen van " bestand
+"set nofoldenable   " fold code NIET bij openen van bestand
 "set foldnestmax=3  " niet genest folden
 "set foldcolumn=0   " geen ruimte laten voor fold info
 "nnoremap <space> za " gebruik spatiebar voor folding
@@ -270,9 +288,6 @@ map <F4> :emenu <C-Z>
 " met [ctrl]-p en [ctrl]-n kan door de mogelijkheden
 " worden gebladerd
 
-" Muis meuk
-"set mouse=a
-"set mousemodel=popup
 " Line Wrap
 set nowrap
 
@@ -317,5 +332,80 @@ function! HasPaste()
         return ''
 endfunction
 
+" Snippets variables
+let g:snips_author='Martijn van Leeuwen'
+let g:author='Martijn van Leeuwen'
+let g:snips_email='info@voc-vanleeuwen.com'
+let g:email='info@voc-vanleeuwen.com'
+"let g:snips_github='https://github.com/jmoyers'
+"let g:github='https://github.com/jmoyers'
+
+if strridx(getcwd(), "Project/Puppet") > 0
+   let g:snips_company='VOC Vanleeuwen'
+   let g:company='VOC Vanleeuwen'
+else
+   let g:snips_company=g:snips_author
+   let g:company=g:snips_author
+endif
+function s:setupPHP()
+   set tabstop=4
+   set shiftwidth=4
+endfunction
+
+" Our php projects are tabstop 4 for now
+au BufRead,BufNewFile *.php call s:setupPHP()
+
+function s:setupJS()
+   set tabstop=4
+   set shiftwidth=4
+endfunction
+
+" Our php projects are tabstop 4 for now
+au BufRead,BufNewFile *.js call s:setupJS()
+
+function s:setupObjC()
+   set tabstop=4
+   set shiftwidth=4
+   set noexpandtab
+endfunction
+
+au FileType objc call s:setupObjC()
+
+" Setup for Puppet files
+function s:setupPP()
+  set tabstop=2
+  set shiftwidth=2
+  set noexpandtab
+endfunction
+
+au BufRead,BufNewFile *.pp call s:setupPP()
+
+" Setup for Python files
+function s:setupPY()
+  set tabstop=2
+  set shiftwidth=2
+  set noexpandtab
+endfunction
+
+au BufRead,BufNewFile *.py call s:setupPY()
+
+" Light 80 column ruler for non-intrusive visual guide for format
+if exists('+colorcolumn')
+  set colorcolumn=80
+else
+  au BufWinEnter * let w:m2=matchadd('ErrorMsg', '\%>80v.\+', -1)
+endif
+
 " Dotted spaces, tabs and trailing spaces
 set list listchars=tab:\ \ ,trail:.
+
+" Set the status line to something nifty
+set stl=%f\ Line:%l/%L\ (%p%%)\ Col:%v\ Buf:#%n\ 0x%B
+
+" always show a status line
+set laststatus=2
+
+" Turn off folds
+"set nofoldenable
+" Change the write command
+command W :execute ':silent w !sudo tee % > /dev/null' | :edit!
